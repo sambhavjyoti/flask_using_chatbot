@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Voice Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🤖 AI Voice Assistant</h1>
+
+    <form action="/ask" method="POST">
+
+        <input
+            type="text"
+            name="question"
+            placeholder="Ask me anything..."
+            required>
+
+        <button type="submit">
+            Ask
+        </button>
+
+    </form>
+
+    {% if question %}
+        <h3>You</h3>
+        <p>{{ question }}</p>
+    {% endif %}
+
+    {% if english %}
+        <h3>AI (English)</h3>
+        <p>{{ english }}</p>
+
+        <h3>Hindi</h3>
+        <p>{{ hindi }}</p>
+
+        <audio controls>
+            <source src="{{ url_for('static', filename='reply.mp3') }}" type="audio/mpeg">
+        </audio>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
