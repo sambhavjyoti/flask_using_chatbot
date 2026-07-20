@@ -12,13 +12,14 @@ def home():
 def ask():
     question = request.form["question"]
 
-    english, hindi = ask_ai(question)
+    english, hindi, audio_base64 = ask_ai(question)
 
     return render_template(
         "index.html",
         question=question,
         english=english,
-        hindi=hindi
+        hindi=hindi,
+        audio_base64=audio_base64,
     )
 
 

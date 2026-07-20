@@ -1,4 +1,6 @@
 import os
+from base64 import b64encode
+from io import BytesIO
 
 from groq import Groq
 from deep_translator import GoogleTranslator
@@ -36,8 +38,10 @@ def ask_ai(question):
     # Translate to Hindi
     hindi = GoogleTranslator(source="en", target="hi").translate(answer)
 
-    # Save speech
+    # Keep audio in memory: Vercel Function filesystems are read-only.
     tts = gTTS(text=hindi, lang="hi")
-    tts.save("static/reply.mp3")
+    audio_file = BytesIO()
+    tts.write_to_fp(audio_file)
+    audio_base64 = b64encode(audio_file.getvalue()).decode("ascii")
 
-    return answer, hindi
+    return answer, hindi, audio_base64
